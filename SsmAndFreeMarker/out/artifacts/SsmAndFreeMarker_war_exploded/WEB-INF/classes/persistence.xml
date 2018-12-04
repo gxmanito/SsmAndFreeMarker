@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+  <context:property-placeholder location="classpath:db.properties"
+    ignore-unresolvable="true" />
+
+  <aop:aspectj-autoproxy proxy-target-class="true" />
+
+  <!-- 数据源 -->
+  <!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName">
+      <value>${databaseName}</value>
+    </property>
+  </bean> -->
+  <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+    init-method="init" destroy-method="close">
+    <!-- 基本属性 url、user、password -->
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <!-- <property name="driverClassName" value="${driverClassName}" /> -->
+
+    <!-- 配置初始化大小、最小、最大 -->
+    <property name="initialSize" value="${pool.initialSize}" />
+    <property name="minIdle" value="${pool.minIdle}" />
+    <property name="maxActive" value="${pool.maxActive}" />
+
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="${pool.maxWait}" />
+
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
+
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
+
+    <property name="validationQuery" value="${pool.validationQuery}" />
+    <property name="testWhileIdle" value="${pool.testWhileIdle}" />
+    <property name="testOnBorrow" value="${pool.testOnBorrow}" />
+    <property name="testOnReturn" value="${pool.testOnReturn}" />
+
+    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    <property name="poolPreparedStatements" value="${pool.poolPreparedStatements}" />
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="${pool.maxPoolPreparedStatementPerConnectionSize}" />
+
+    <!-- 配置拦截的filters -->
+    <!-- <property name="filters" value="${pool.filters}" /> -->
+  </bean>
+  
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <!-- mybatis 会话管理 -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="configurationProperties">
+      <props>
+        <prop key="databaseType">${databaseType}</prop>
+      </props>
+    </property>
+    <property name="dataSource" ref="dataSource" />
+    <property name="configLocation" value="classpath:mybatis.xml" />
+    <!-- 自动扫描mapping.xml文件，默认dao所在包 -->
+    <!-- <property name="mapperLocations" value="classpath:" /> -->
+  </bean>
+  
+  <!-- mybatis mapper扫描 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- <property name="basePackage" value="**.dao" /> -->
+    <property name="basePackage" value="gx.**.dao" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+  </bean>
+  
+  <!-- 事务管理器 -->
+  <bean id="defaultTransactionManager"
+    class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource">
+      <ref bean="dataSource" />
+    </property>
+  </bean>
+  
+  <!-- 使用annotation定义事务 -->
+  <tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true" />
+   
+  <!-- Redis配置 --> 
+  <!-- <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+    <property name="maxTotal" value="${redis.pool.maxActive}"/>
+    <property name="maxWaitMillis" value="${redis.pool.maxWait}"/>
+    <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+  </bean>
+  
+  <bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool">
+    <constructor-arg index="0" value="${redis.master}" />
+    <constructor-arg index="1">
+      <set>
+        <value>${redis.sentinel1}</value>
+        <value>${redis.sentinel2}</value>
+      </set>
+    </constructor-arg>
+    <constructor-arg index="2" ref="jedisPoolConfig" />
+    <constructor-arg index="3" value="${redis.password}"  />
+  </bean> -->  
+</beans>

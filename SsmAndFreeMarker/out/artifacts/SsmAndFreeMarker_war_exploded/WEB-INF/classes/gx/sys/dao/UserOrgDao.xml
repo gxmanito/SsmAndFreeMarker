@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gx.sys.dao.UserOrgDao">
+
+	<!-- 查询全部 -->
+	<select id="selectUserOrg" resultType="gx.sys.entity.UserOrg">
+		select code,parent,name,phone,busi_license,delegate,remarks,lvl,lft,rgt,address,delegate_phone,cert_type
+    from SYS_USER_ORG
+    order by lft
+	</select>
+  
+  <select id="selectUserOrgById" resultType="gx.sys.entity.UserOrg">
+   select code,parent,name,phone,cert_type,busi_license,delegate,delegate_phone,address,remarks from sys_user_org where code=#{code}
+  </select>
+ 
+	<!-- 查询树 -->
+	<select id="selectUserOrgByKey" resultType="gx.sys.entity.UserOrg">
+    select code,name from sys_user_org where (code like concat('%',${key},'%') or name like concat('%',${key},'%')) limit 10 
+	</select>
+
+	<delete id="deleteUserOrgByRange">
+		delete from sys_user_org where lft between #{lft} and #{rgt}
+	</delete>
+
+	<delete id="deleteUserByCode" parameterType="String">
+    delete from sys_user_org where code=#{code}
+  </delete>
+
+	<!-- 扩展空间 -->
+	<update id="updateSpace">
+		update sys_user_org set lft=(case when lft>#{start}-1 then lft+#{space} else lft end),rgt=rgt+#{space} 
+    where lft>=#{start} or rgt>=#{start}
+	</update>
+
+	<!-- 更新数据 -->
+	<update id="updateUserOrg" parameterType="gx.sys.entity.UserOrg">
+		update sys_user_org set name=#{name},phone=#{phone,jdbcType=VARCHAR},busi_license=#{busiLicense,jdbcType=VARCHAR},
+      delegate=#{delegate,jdbcType=VARCHAR},remarks=#{remarks,jdbcType=VARCHAR},cert_type=#{certType,jdbcType=VARCHAR},
+			address=#{address,jdbcType=VARCHAR},delegate_phone=#{delegatePhone,jdbcType=VARCHAR}
+		where code=#{code}
+	</update>
+
+	<insert id="insertUserOrg" parameterType="gx.sys.entity.UserOrg">
+		insert into sys_user_org(code,parent,name,phone,busi_license,delegate,remarks,lvl,lft,rgt,cert_type,address,delegate_phone)
+		values(#{code},#{parent,jdbcType=VARCHAR},#{name},#{phone,jdbcType=VARCHAR},#{busiLicense,jdbcType=VARCHAR},#{delegate,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},#{lvl},#{lft},#{rgt},#{certType,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{delegatePhone,jdbcType=VARCHAR})
+	</insert>
+</mapper>

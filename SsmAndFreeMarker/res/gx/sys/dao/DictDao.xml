@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gx.sys.dao.DictDao">
+	<!-- 代码字典查询分页 -->
+	<select id="selectSysCode" parameterType="gx.common.Page">
+		select code_type,type_name,code,name,remarks from sys_code
+		<where>
+			<if test="params.codeType!=null">
+				and code_type=#{params.codeType}
+			</if>
+      <if test="params.code!=null">
+        and code=#{params.code}
+      </if>
+			<if test="params.name!=null">
+			 and instr(name,#{params.name})!=0
+			</if>
+			<if test="params.typeName!=null">
+			 and instr(type_name,#{params.typeName})!=0
+			</if>
+		</where>
+		order by code_type desc,code asc
+	</select>
+
+	<!-- 根据代码类型和代码判重 -->
+	<select id="selectSysCodeById" resultType="gx.sys.entity.SysDict">
+		select code_type,type_name,code,name,remarks from sys_code where code_type=#{codeType} and code=#{code}
+	</select>
+
+	<!--更新代码字典 -->
+	<update id="updateSysCode" parameterType="gx.sys.entity.SysDict">
+		update sys_code set type_name=#{typeName},name=#{name},remarks=#{remarks,jdbcType=VARCHAR}
+		where code_type=#{codeType} and code=#{code}
+	</update>
+
+ 
+  <!-- 插入代码字典-->
+	<insert id="insertSysCode" parameterType="gx.sys.entity.SysDict">
+		insert into sys_code(code_type,type_name,code,name,remarks)
+    values(#{codeType},#{typeName},#{code},#{name},#{remarks,jdbcType=VARCHAR})
+	</insert>
+	
+  <!-- 删除代码字典 -->
+	<delete id="deleteSysCode">
+		delete from sys_code where code_type=#{codeType} and code=#{code}
+	</delete>
+</mapper>

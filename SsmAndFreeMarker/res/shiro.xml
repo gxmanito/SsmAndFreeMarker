@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+  <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realm" ref="webappRealm" />
+  </bean>
+
+  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <!-- Shiro的核心安全接口，这个属性是必须的 -->
+    <property name="securityManager" ref="securityManager"></property>
+    <!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+    <property name="loginUrl" value="/login"></property>
+    <property name="filters">
+      <map>
+        <entry key="anyRole" value-ref="anyRoleAuthorizationFilter" />
+      </map>
+    </property>
+    <!-- 登录成功后要跳转的连接 -->
+    <!-- <property name="successUrl" value="/main" ></property> -->
+    <!-- 用户访问未对其授权的资源时，所显示的连接 -->
+    <property name="unauthorizedUrl" value="/noAuthority"></property>
+    <property name="filterChainDefinitionMap" ref="filterChainFactoryBean"></property>
+  </bean>
+
+  <!-- 凭证匹配器 -->
+  <bean id="credentialsMatcher"
+    class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    <!-- 选用MD5散列算法 -->
+    <property name="hashAlgorithmName" value="MD5" />
+    <!-- 进行1次加密 -->
+    <property name="hashIterations" value="2" />
+    <property name="storedCredentialsHexEncoded" value="false" />
+  </bean>
+
+  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>

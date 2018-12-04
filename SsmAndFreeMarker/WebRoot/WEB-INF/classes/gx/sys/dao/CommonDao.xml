@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gx.sys.dao.CommonDao">
+  <select id="selectSysId" resultType="gx.common.SimpleCode">
+    select sys_id id,sys_name name from sys_id order by sys_id
+  </select>
+  
+  <!-- 根据codeType 查询 数据字典集合-->
+  <select id="selectSysCodeByType" parameterType="short" resultType="gx.sys.entity.SysDict">
+   select code_type,type_name,code,name,remarks from sys_code where code_type=#{codeType} order by code_type,code asc
+  </select>
+  
+  <select id="selectUserById" parameterType="string" resultType="gx.sys.entity.SysUser">
+    select a.user_id,a.user_name,a.user_pwd,a.user_py,a.user_org,b.name org_name,
+      a.email,a.sex,a.mobile_phone,a.state,a.remarks,a.gmt_create,a.gmt_update,a.gmt_login
+    from sys_user a,sys_user_org b where a.user_org=b.code and a.user_id=#{userId}
+  </select>
+
+  <select id="selectAllResRole" parameterType="string" resultType="gx.common.SimpleCode">
+    select a.res_url id,a.permission name,group_concat(b.role_id) remarks from sys_resource a,sys_role_resource b
+    where a.sys_id=b.sys_id and a.res_id=b.res_id and a.res_url is not null and b.sys_id=#{sysId}
+    group by a.res_urL,a.permission,a.lft order by a.lft desc
+  </select>
+  
+  <select id="selectUserRoleIds" resultType="String">
+    select role_id from sys_user_role where user_id=#{userId} and sys_id=#{sysId}
+  </select>
+  
+  <select id="selectUserMenu" resultType="gx.sys.entity.SysResource">
+    select a.sys_id,a.res_id,a.parent,a.res_name,res_py,a.res_type,a.res_url,a.icon,a.remarks from sys_resource a
+    where exists(select 1 from sys_role_resource b,sys_user_role c
+      where a.sys_id=b.sys_id and a.res_id=b.res_id and b.sys_id=c.sys_id and b.role_id=c.role_id and c.user_id=#{userId} and c.sys_id=#{sysId})
+      and a.res_type!=2 and a.state=0
+    order by a.lft
+  </select>
+  
+  <select id="selectUserPermission" resultType="String">
+    select b.permission from sys_user_role a,sys_role_permission b where a.role_id=b.role_id and a.user_id=#{userId} and a.sys_id=#{sysId}
+  </select>
+  
+  <select id="selectUserOrg" resultType="gx.sys.entity.UserOrg">
+   select code,parent,name,phone,cert_type,busi_license,delegate,delegate_phone,address,remarks from sys_user_org where code=#{code}
+  </select>
+  
+  <update id="updateUserLoginTime" parameterType="string">
+    update sys_user set gmt_login=now() where user_id=#{userId}
+  </update>
+  
+  <update id="updateUserSelf" parameterType="gx.sys.entity.SysUser">
+    update sys_user set email=#{email,jdbcType=VARCHAR},sex=#{sex},mobile_phone=#{mobilePhone,jdbcType=VARCHAR}
+    where user_id=#{userId}
+  </update>
+  
+  <update id="updateUserPwd">
+    update sys_user set user_pwd=#{userPwd},gmt_update=#{gmtUpdate} where user_id=#{userId}
+  </update>
+
+</mapper>

@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+html,body{background-color:#f5f7f9}
+body{font-size:14px;height:100%;font-family:"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;}
+.main{position:relative;padding:5px;height:100%;overflow:hidden}
+.header,.header .ivu-form-item{margin-bottom:5px;}
+.page{float: right;}
+.back-top{padding: 10px;background: rgba(0, 153, 229, .7);color: #fff;text-align:center;border-radius:2px}
+
+.edit-main{max-width:960px;width:100%;margin:0 auto;padding:0 5px 5px;background-color:#f5f7f9}
+
+.thumbnail{position: relative;width:70px;height:100px;display:inline-block;text-align:center;margin-right:5px}
+.thumbnail img{width:70px;height:70px;display:inline-block;border:1px solid transparent;border-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.2)}
+
+.mask .ivu-modal-mask,.mask .ivu-modal-wrap{z-index:999999}
+.mask .ivu-modal-content{background:none;text-align:center;color:#f90}
+.mask .spin{-webkit-animation:spin 2s infinite linear;animation:spin 2s infinite linear}
+.mask .ivu-modal-footer{display:none}
+@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg);}}
+@keyframes spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg);}}
+
+.rotate90{position:relative;transform:rotate(90deg);-ms-transform:rotate(90deg);-webkit-transform: rotate(90deg);-moz-transform:rotate(90deg);-o-transform: rotate(90deg)}
+.rotate180{transform:rotate(180deg);-ms-transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg)}
+.rotate-90{position:relative;transform:rotate(-90deg);-ms-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg)}
+
+.full-modal-wrap{position:fixed;top:0;right:0;bottom:0;left:0;overflow:hidden;z-index:1000;background-color:#f5f7f9}
+.full-modal-footer{position:fixed;left:0;right:0;bottom:0;padding:0 18px;text-align:right;line-height:40px;background-color:#fff}
+
+.tool-title-card .toolbar{float:right;display:inline;position:relative;top:-5px}
+.tool-title-card .ivu-card-head p,.tool-title-card .ivu-card-head-inner{overflow:visible;white-space:normal}
+.sub-panel .ivu-card{margin:5px 0}
+.ivu-card .title{font-weight:700;color:#f90}
+.ivu-card .title-s{color:#2d8cf0}
+.ivu-card .ivu-card-body{padding:5px}
+
+.ivu-table-header th{text-align:center;}
+.tree-grid .ivu-table td{height:36px;}
+.tree-grid .ivu-table-cell .ivu-icon{position:relative;top:2px;margin-right:5px;font-size:20px;color:#2d8cf0}
+.ivu-modal{top:50px}
+.modal-top .ivu-modal{top:2px}
+.modal-hideFooter .ivu-modal-footer{display:none}
+.ivu-form .ivu-form-item-label,.ivu-form-item-label,.ivu-form-item-content,.ivu-table-cell,.ivu-modal-body,.ivu-modal-confirm-body{font-size:14px}
+

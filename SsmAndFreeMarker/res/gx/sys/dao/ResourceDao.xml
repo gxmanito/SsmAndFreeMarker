@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gx.sys.dao.ResourceDao">
+  <!-- 根据系统id 查询所有资源 -->
+  <select id="selectAllResource" resultType="gx.sys.entity.SysResource" parameterType="String">
+    select sys_id,res_id,parent,res_name,res_py,res_type,res_url,icon,state,permission,remarks,lvl,lft,rgt
+    from sys_resource where sys_id=#{sysId} order by lft
+  </select>
+  
+  <!-- 扩展空间 -->
+  <update id="updateSpace">
+    update sys_resource set lft=(case when lft>#{start}-1 then lft+#{space} else lft end),rgt=rgt+#{space} 
+    where (lft>=#{start} or rgt>=#{start}) and sys_id=#{sysId}
+  </update>
+  
+  <insert id="insertResource" parameterType="gx.sys.entity.SysResource">
+    insert into sys_resource(sys_id,res_id,parent,res_name,res_py,res_type,res_url,icon,permission,remarks,lvl,lft,rgt, state)
+    values (#{sysId},#{resId},#{parent},#{resName,jdbcType=VARCHAR},#{resPy,jdbcType=VARCHAR},#{resType},#{resUrl,jdbcType=VARCHAR},
+      #{icon,jdbcType=VARCHAR},#{permission,jdbcType=VARCHAR},#{remarks,jdbcType=VARCHAR},#{lvl},#{lft},#{rgt},#{state})
+  </insert>
+  
+  <update id="updateResource" parameterType="gx.sys.entity.SysResource">
+    update sys_resource set parent=#{parent},res_name=#{resName,jdbcType=VARCHAR},res_py=#{resPy,jdbcType=VARCHAR},res_type=#{resType},
+      res_url=#{resUrl,jdbcType=VARCHAR},icon=#{icon,jdbcType=VARCHAR},permission=#{permission,jdbcType=VARCHAR},
+      remarks=#{remarks,jdbcType=VARCHAR},lvl=#{lvl},lft=#{lft},rgt=#{rgt},state=#{state}
+    where res_id=#{resId} and sys_id=#{sysId}
+  </update>
+  
+  <delete id="deleteResource">
+    delete from sys_resource where res_id=#{resId} and sys_id=#{sysId}
+  </delete>
+  
+  <delete id="deleteResourceByRange">
+    delete from sys_resource where lft between #{lft} and #{rgt} and sys_id=#{sysId}
+  </delete>
+  
+  <!-- 通过res_id查询资源 -->
+  <select id="selectResourceById" resultType="gx.sys.entity.SysResource">
+    select sys_id,res_id,parent,res_name,res_py,res_type,res_url,icon,state,permission,remarks,lvl,lft,rgt
+    from sys_resource where res_id=#{resId} and sys_id=#{sysId}
+  </select>
+  <!-- !根据左值右值范围查询 -->
+  <select id="selectResourceByRange" resultType="gx.sys.entity.SysResource" >
+    select sys_id,res_id,parent,res_name,res_py,res_type,res_url,icon,state,permission,remarks,lvl,lft,rgt
+    from sys_resource where lft between #{lft} and #{rgt} and sys_id=#{sysId}
+  </select>
+</mapper>

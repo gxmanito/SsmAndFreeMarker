@@ -1,0 +1,103 @@
+@charset "utf-8";
+/*全局化*/
+html
+{
+	width:100%;
+	height:100%
+}
+body
+{
+	width:100%;
+	height:100%;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	font-size: 12px;
+	font-family: 宋体, 新宋体;
+	line-height: 120%;
+	margin-left: 2px;
+	margin-top: 2px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+TD,.datagrid-cell,.datagrid-cell-group,
+.datagrid-header-rownumber,.datagrid-cell-rownumber,
+.datagrid-header .datagrid-cell span
+{
+	color: #030303;
+	font-family: 宋体, 新宋体;
+	font-size: 11pt;
+}
+TH
+{
+	 font-weight: normal;
+}
+OL
+{
+	list-style-type: disc;
+}
+A:active
+{
+	text-decoration: underline;
+}
+A:visited
+{
+	color: #0066FF;
+	text-decoration: none;
+}
+A:hover
+{
+	color: #FF0000;
+	text-decoration: underline;
+}
+A:link
+{
+	color: #0066FF;
+	text-decoration: none;
+}
+
+FORM
+{
+	margin: 0px;
+}
+SELECT
+{
+	height:22px;
+}
+INPUT
+{
+		
+}
+INPUT.label
+{
+	color: #FF0000;
+	border-top: 0px solid #FFFFFF;
+	border-bottom: 1px solid #000000;
+	border-left: 0px solid #FFFFFF;
+	border-right: 0px solid #FFFFFF;
+}
+
+INTPUT.text
+{
+	height:65px;
+	border: solid 1px #000000;
+	font-size: 10pt;
+	background-image: url(../gis/Images/TextBg.gif);
+}
+INPUT.bu
+{
+	height: 20px;
+	width: 65px;
+	border-width: 1px;
+	border-color: #FFC080;
+	border-style: solid;
+	font-size: 10pt;
+	padding-bottom:1px;
+}
+
+checkbox{
+	width:16px;
+	height:16px;
+}
+

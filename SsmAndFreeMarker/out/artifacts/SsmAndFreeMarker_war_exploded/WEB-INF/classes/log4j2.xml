@@ -1,0 +1,60 @@
+<!DOCTYPE xml>
+<configuration status="info" monitorInterval="30">
+  <appenders>
+    <console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss} %p{length=1} %c{1} - %m%n" />
+    </console>
+
+    <RollingFile name="RollingFileInfo" fileName="log/info.log"
+      filePattern="log/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+      <Filters>
+        <ThresholdFilter level="INFO" />
+        <ThresholdFilter level="WARN" onMatch="DENY"
+          onMismatch="NEUTRAL" />
+      </Filters>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB" />
+      </Policies>
+    </RollingFile>
+
+    <RollingFile name="RollingFileWarn" fileName="log/warn.log"
+      filePattern="log/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+      <Filters>
+        <ThresholdFilter level="WARN" />
+        <ThresholdFilter level="ERROR" onMatch="DENY"
+          onMismatch="NEUTRAL" />
+      </Filters>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB" />
+      </Policies>
+    </RollingFile>
+
+    <RollingFile name="RollingFileError" fileName="log/error.log"
+      filePattern="log/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+      <ThresholdFilter level="ERROR" />
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="100 MB" />
+      </Policies>
+    </RollingFile>
+  </appenders>
+
+  <loggers>
+    <!--过滤掉spring和hibernate的一些无用的debug信息 -->
+    <logger name="com" level="INFO"/>
+    <logger name="org" level="INFO"/>
+    <logger name="net" level="INFO"/>
+    <logger name="gx" level="INFO"/>
+    <logger name="gx.sys.dao" level="DEBUG"/>
+    <root level="all">
+      <appender-ref ref="Console" />
+      <!-- <appender-ref ref="RollingFileInfo" /> <appender-ref ref="RollingFileWarn" 
+        /> <appender-ref ref="RollingFileError" /> -->
+    </root>
+  </loggers>
+</configuration>

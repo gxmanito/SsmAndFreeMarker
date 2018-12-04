@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+body{height:100%;}
+.layout{min-width:960px;height:100%;overflow:hidden;padding-bottom:40px;}
+.layout-header{position:relative;height:82px;background-color:#f8f8f9}
+.layout-sider{position:absolute;left:0;top:85px;bottom:40px;overflow:auto;width:250px;background-color:#f8f8f9}
+.layout-body{height:100%;padding:5px 0 80px;background-color:#fff}
+.layout-footer{position:fixed;left:0;bottom:0;right:0;height:40px;background-color:#464c5b;color:#fff;text-align:center;line-height:40px;z-index:99;}
+.layout-header .ivu-card-body,.layout-sider .ivu-card-body,.layout-body .ivu-card-body{padding:0;}
+
+.logo{height:80px;overflow:hidden;}
+.logo img{height:100%;}
+.header-left {position:absolute;top:0;left:0;width:250px;}
+.header-left .search{width:190px;padding-top:10px}
+.header-right{position:absolute;top:0;right:0;width:auto;background-color:#f8f8f9}
+.header-right.ivu-menu-horizontal{height:80px;line-height:80px}
+.header-right.ivu-menu-horizontal.ivu-menu-light::after{height:0}
+.header-right .ivu-menu-submenu{font-size:16px}
+.header-right .ivu-menu-item,.header-right .ivu-menu-submenu{padding:0 5px}
+.header-right .clock.ivu-menu-item{padding:10px 5px;line-height:30px;text-align:center;float:left}
+
+.nav-btn{position:absolute;top:85px;width:25px;padding:25px 1px 5px;border:1px solid #e9eaec;border-radius:4px;text-align:center;font-weight:600;color:#2b85e4;cursor:pointer}
+.nav-btn:hover{border-color:#eee;box-shadow:0 1px 6px rgb(0,0,0,0.2)}
+.nav-btn-hide{left:250px;background:#f8f8f9 url(../image/nav_hide.png) 0 0 no-repeat;}
+.nav-btn-show{left:0;background:#f8f8f9 url(../image/nav_show.png) 0 0 no-repeat;}
+.header-left .nav-btn:hover{color:#5cadff}
+
+.nav{background-color:#f8f8f9}
+.nav .ivu-menu-submenu-title{background-color:#2b85e4;color:#fff;font-size:16px;font-weight:500}
+.nav .ivu-menu-submenu-title:hover,.nav .ivu-menu-item:hover{background-color:#5cadff;}
+.nav.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){border-color:#ff9900}
+
+.body{height:100%;}
+.body .ivu-tabs-bar{margin:0}
+.body .ivu-tabs-tab{font-weight:600}
+.body .ivu-tabs-tab-active:before{content:'';display:block;width:100%;height:5px;background:#ff9900;position:absolute;top:0;left:0}
+.body .ivu-tabs-content{position:absolute;left:0;top:28px;right:0;bottom:0;border-left:1px solid #dddee1;padding-top:5px}
+.body .ivu-tabs-tabpane{height:100%}
+
+@media screen and (max-width: 850px){
+	.logo{height:70px;margin-top:5px}
+}
