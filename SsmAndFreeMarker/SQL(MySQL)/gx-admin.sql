@@ -124,7 +124,7 @@ INSERT INTO `sys_code` VALUES ('9', '地类代码', '302', '建设用地', null)
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '1', '存量房因继承（受遗赠）转移登记', null);
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '11', '因企业破产兼并、合并的转移登记', null);
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '12', '因单位优惠出售公有住房的转移登记', null);
-INSERT INTO `sys_code` VALUES ('10', '产权来源', '13', '因法院判决（协助执行）的转移登记', null);
+INSERT INTO `sys_code` VALUES ('10', '产权来源', '13', '因法院判决（协助执行）的转移登记', null); 
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '14', '因房改房收回的转移登记', null);
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '15', '因司法拍卖房屋的转移登记', null);
 INSERT INTO `sys_code` VALUES ('10', '产权来源', '16', '因国有、集体企业改制的转移登记', null);
