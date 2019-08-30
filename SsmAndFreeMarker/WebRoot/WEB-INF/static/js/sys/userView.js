@@ -66,8 +66,8 @@ var vm = new Vue(
           trigger: 'blur'
         }, {
           validator: function(rule, value, callback) {
-            if (!/^\w{6,20}$/.test(value)) {
-              callback(new Error('帐号必须由6-20位 字、数字或下划线组成'));
+            if (!/^\w{3,20}$/.test(value)) {
+              callback(new Error('帐号必须由3-20位 字、数字或下划线组成'));
               return;
             }
 
