@@ -29,9 +29,9 @@ CREATE TABLE `sys_user` (
   `MOBILE_PHONE` varchar(18) DEFAULT NULL COMMENT '手机号',
   `STATE` decimal(3,0) NOT NULL DEFAULT '0' COMMENT '状态 sys_code.code_type=1',
   `REMARKS` varchar(250) DEFAULT NULL COMMENT '备注',
-  `GMT_CREATE` date DEFAULT NULL COMMENT '创建时间',
-  `GMT_UPDATE` date DEFAULT NULL COMMENT '密码更新时间',
-  `GMT_LOGIN` date DEFAULT NULL COMMENT '最后登陆时间',
+  `GMT_CREATE` datetime DEFAULT NULL COMMENT '创建时间',
+  `GMT_UPDATE` datetime DEFAULT NULL COMMENT '密码更新时间',
+  `GMT_LOGIN` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `USER_ORG` varchar(50) DEFAULT NULL COMMENT '用户所属机构 sys_user_org.code',
   PRIMARY KEY (`USER_ID`),
   UNIQUE KEY `PK_SYS_USER` (`USER_ID`)
